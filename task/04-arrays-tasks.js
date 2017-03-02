@@ -314,7 +314,12 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-   throw new Error('Not implemented');
+    var sum = 0;
+    var resultArr = arr.filter (function(item, i) {
+        if (i % 2 == 1) return true;
+        return false;
+    })
+    return resultArr;
 }
 
 
@@ -333,7 +338,15 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-   throw new Error('Not implemented');
+    var resultArr = arr.map (function(item, i) {
+       var tempArr = new Array(i);
+       return tempArr.map(function() {
+            return item;
+        })
+    })
+    return resultArr.reduce(function(prevResult, item,i) {
+        return prevResult.concat(item)
+    },resultArr[0]);
 }
 
 
@@ -401,7 +414,9 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
 function getItemsSum(arr) {
-   throw new Error('Not implemented');
+   return arr.reduce(function(sum, current) {
+       return sum + current;
+   }, 0);
 }
  
 /** 
@@ -435,7 +450,11 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurences(arr, item) {
-   throw new Error('Not implemented');
+   var counter = 0;
+   return arr.reduce(function(prevResult, element) {
+       if (element === item) counter++;
+       return counter;
+   },0)
 }
 
 /**
@@ -450,7 +469,7 @@ function findAllOccurences(arr, item) {
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
 function toStringList(arr) {
-   throw new Error('Not implemented');
+   return arr.join(',');
 }
 
 
@@ -479,7 +498,15 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
-   throw new Error('Not implemented');
+    return arr.sort( function (a,b) {
+        if(a.country == b.country) {
+            return a.city - b.city;
+        }
+        else {
+            return a.country - b.country;
+        }
+        return 0;
+    })
 }
 
 /**
