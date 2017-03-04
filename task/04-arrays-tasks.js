@@ -47,7 +47,6 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-    function generateOdds(len) {
        if (len == 0) return [];
         var arr = [1];
         var x = 3
@@ -56,7 +55,6 @@ function generateOdds(len) {
             x += 2;
         }
         return arr;
-    }
 }
 
 
@@ -256,7 +254,10 @@ function getTail(arr, n) {
  *    +'30,31,32,33,34'
  */
 function toCsvText(arr) {
-   throw new Error('Not implemented');
+    return arr.map(function(item,i) {
+        if (i == arr.length - 1) {return item.toString()}
+        return item.toString()+'\n'
+    }).join('');
 }
 
 /**
@@ -293,12 +294,11 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-    var sum = 0;
-    var resultArr = arr.map (function(item, i) {
-        if (i == 0) return item;
-        sum += item;
-        return item + sum;
-    })
+    var resultArr = arr;
+    resultArr.reduce(function(prevResult,item,i){
+        resultArr[i] = prevResult + item;
+        return resultArr[i];
+    },0)
     return resultArr;
 }
 
@@ -338,15 +338,14 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-    var resultArr = arr.map (function(item, i) {
-       var tempArr = new Array(i);
-       return tempArr.map(function() {
-            return item;
-        })
+    var resultArr = [];
+    arr.forEach(function(item,i){
+        while (i >= 0) {
+            resultArr.push(item);
+            i--;
+        }
     })
-    return resultArr.reduce(function(prevResult, item,i) {
-        return prevResult.concat(item)
-    },resultArr[0]);
+    return resultArr;
 }
 
 
@@ -364,7 +363,25 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-   throw new Error('Not implemented');
+    var arrOfMaxElements = [];
+    var max = 0,
+        pre_max = 0,
+        pre_pre_max = 0;
+    arr.forEach(function(item,i) {
+        if (item > pre_pre_max) {
+            if (item > pre_max) {
+                if (item > max) {
+                    max = item;
+                }
+                else pre_max = item;
+            }
+            else pre_pre_max = item;
+        }
+    })
+    arrOfMaxElements.push(pre_pre_max);
+    arrOfMaxElements.push(pre_max);
+    arrOfMaxElements.push(max);
+    return  arrOfMaxElements;
 }
  
  
