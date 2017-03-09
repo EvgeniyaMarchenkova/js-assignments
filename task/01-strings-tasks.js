@@ -226,7 +226,16 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-
+    var result = str;
+    var input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var output ='NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+    for (var i = 0; i < str.length; i++ ) {
+        var index = input.indexOf(result[i]);
+        if (index != -1) {
+            result = result.replace(result.charAt(i), output.charAt(index))
+        }
+    }
+    return result;
 }
 
 /**
@@ -243,7 +252,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    return  typeof value == String;
+    return  typeof value == 'string' || value instanceof String;
 }
 
 
@@ -272,6 +281,17 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
+    var arr = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
+              'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
+          'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
+  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠']
+    var index;
+    arr.forEach(function (item, i) {
+        if (item == value) {
+            index = i;
+        }
+    })
+    return index;
 
 }
 
