@@ -3,7 +3,7 @@
 /**************************************************************************************************
  *                                                                                                *
  * Plese read the following tutorial before implementing tasks:                                   *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initiali zer *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object        *
  *                                                                                                *
  **************************************************************************************************/
@@ -23,7 +23,11 @@
  *    console.log(r.getArea());   // => 200
  */
 function Rectangle(width, height) {
-    throw new Error('Not implemented');
+    this.width = width;
+    this.height = height;
+    this.getArea = function() {
+        return this.width*this.height;
+    }
 }
 
 
@@ -38,7 +42,7 @@ function Rectangle(width, height) {
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
 function getJSON(obj) {
-    throw new Error('Not implemented');
+    return JSON.stringify(obj);
 }
 
 
@@ -54,7 +58,7 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    throw new Error('Not implemented');
+    return 5;
 }
 
 
@@ -107,33 +111,40 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-
+    result : '',
     element: function(value) {
-        throw new Error('Not implemented');
+        this.result += value;
+        return this;
     },
 
     id: function(value) {
-        throw new Error('Not implemented');
+        this.result += '#' + value;
+        return this;
     },
 
     class: function(value) {
-        throw new Error('Not implemented');
+        this.result += '.' + value;
+        return this;
     },
 
     attr: function(value) {
-        throw new Error('Not implemented');
+        this.result += '[' + value + ']';
+        return this;
     },
 
     pseudoClass: function(value) {
-        throw new Error('Not implemented');
+        this.result += ':' + value;
+        return this;
     },
 
     pseudoElement: function(value) {
-        throw new Error('Not implemented');
+        this.result += '::' + value;
+        return this;
     },
 
     combine: function(selector1, combinator, selector2) {
-        throw new Error('Not implemented');
+        this.result += selector1 + ' ' + combinator + ' ' + selector2;
+        return this;
     },
 };
 

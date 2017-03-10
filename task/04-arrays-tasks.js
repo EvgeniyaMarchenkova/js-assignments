@@ -338,14 +338,15 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-    var resultArr = [];
-    arr.forEach(function(item,i){
-        while (i >= 0) {
-            resultArr.push(item);
-            i--;
+    var arrOfArrElements  = arr.map(function(item,i) {
+            var arrOfEl = [];
+            arrOfEl.length = i+1;
+            return arrOfEl.fill(item);
         }
-    })
-    return resultArr;
+    )
+    return arrOfArrElements.reduce(function(prevResult, item){
+        return prevResult.concat(item);
+    },[])
 }
 
 
@@ -363,25 +364,12 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-    var arrOfMaxElements = [];
-    var max = 0,
-        pre_max = 0,
-        pre_pre_max = 0;
-    arr.forEach(function(item,i) {
-        if (item > pre_pre_max) {
-            if (item > pre_max) {
-                if (item > max) {
-                    max = item;
-                }
-                else pre_max = item;
-            }
-            else pre_pre_max = item;
-        }
-    })
-    arrOfMaxElements.push(pre_pre_max);
-    arrOfMaxElements.push(pre_max);
-    arrOfMaxElements.push(max);
-    return  arrOfMaxElements;
+    if (arr.length == 0) return [];
+    var resultArr = arr.sort(function(a,b) {
+        return b-a;
+    });
+    resultArr.length = 3;
+    return resultArr;
 }
  
  

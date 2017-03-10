@@ -8,7 +8,6 @@
  *                                                                                          *
  ********************************************************************************************/
 
-
 /**
  * Parses a rfc2822 string date representation into date value
  * For rfc2822 date specification refer to : http://tools.ietf.org/html/rfc2822#page-14
@@ -22,7 +21,8 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+
+
 }
 
 /**
@@ -56,9 +56,9 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+    var year = date.getFullYear();
+    return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
 }
-
 
 /**
  * Returns the string represention of the timespan between two dates.
@@ -76,7 +76,39 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+    var str = '';
+    var deltaHours =  (endDate.getHours() - startDate.getHours());
+    console.log(deltaHours);
+    if (deltaHours/10 >= 1) {
+        str +=  deltaHours
+    }  else {
+        str +='0' + deltaHours;
+    }
+    var deltaMinutes = (endDate.getMinutes() - startDate.getMinutes());
+    if (deltaMinutes/10 >= 1) {
+        str +=  ':' + deltaMinutes;
+    }  else {
+        str +=':0' + deltaMinutes;
+    }
+    var deltaSeconds = (endDate.getSeconds() - startDate.getSeconds());
+    if (deltaSeconds/10 >= 1) {
+        str +=  ':' + deltaSeconds + '.';
+    }  else {
+        str +=':0' + deltaSeconds + '.';
+    }
+    var deltaMilliseconds = (endDate.getMilliseconds() - startDate.getMilliseconds());
+    if (deltaMilliseconds/10 >= 1) {
+        if (deltaMilliseconds/100 >= 1) {
+            str += deltaMilliseconds;
+        }
+        else {
+            str += '0' + deltaMilliseconds;
+        }
+    }
+    else {
+        str += '00' + deltaMilliseconds;
+    }
+    return str;
 }
 
 
