@@ -185,7 +185,7 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    for (var i = 0; i < str.length; i++) {
+    for (var i = 0; i < str.length/2; i++) {
         if (str.indexOf(str.charAt(i),  i+1) == -1) {
             return str.charAt(i);
         }
@@ -368,7 +368,7 @@ function isBracketsBalanced(str) { /*
             newStr = newStr.replace(/\(/, '').replace(/\)/, '');
         }
     }
-    return newStr.length == 0 ? true : false;*/
+    return newStr.length == 0; */
 }
 
 
@@ -404,7 +404,30 @@ function isBracketsBalanced(str) { /*
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+    var fulldays = (endDate - startDate)/86400000;
+    if (fulldays >= 546) {
+        return  endDate.getFullYear() - startDate.getFullYear() + ' years ago';
+    }
+    if (fulldays >= 345 && fulldays < 546) {
+        return  'a years ago';
+    }
+    if (fulldays >= 45 && fulldays < 345) {
+        return  endDate.getFullMonth() - startDate.getFullMonth() + ' months ago';
+    }
+    if (fulldays >= 25 && fulldays < 45) {
+        return  'a month ago';
+    }
+    if (fulldays >= 1.5 && fulldays < 25) {
+        return  Math.ceil(fulldays) + ' days ago'
+    }
+    var fullhours = (endDate - startDate)/3600000
+    if (fullhours >= 22 && fullhours < 36) {
+        return  'a day ago';
+    }
+    if (fullhours >= 1.5 && fullhours < 22) {
+        return  Math.ceil(fullhours) + ' hours ago'
+    }
+    var fullminutes = (endDate - startDate)/60000;
 }
 
 
@@ -428,7 +451,19 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    var arrSymbolls = new Array(n);
+    for (var i = 0; i < arrSymbolls.length; i++) {
+        arrSymbolls[i] = i;
+    }
+    var target = arrSymbolls.join('');
+    var result = 0;
+    var str = '';
+    while(num != 0) {
+        var i = num % target.length;
+        str = target[i] + str;
+        num = parseInt(num / target.length);
+    }
+    return str||target[0];
 }
 
 
@@ -445,18 +480,19 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw "er"
     var result = '';
-    return pathes.reduce(function(prevResult,item,i) {
+    var commonPart = pathes.reduce(function(prevResult,item,i) {
         var arr1 = item.split('');
         var arr2 = prevResult.split('');
         for (var i = 0; i < arr1.length; i++) {
             if (arr1[i] != arr2[i]) {
                 arr1.length = i;
-                return arr1.join('')
             }
         }
-    }, pathes[0])
+        return arr1.join('');
+    }, pathes[0]);
+    var lastIndex = commonPart.lastIndexOf('/');
+    return commonPart.substring(0,lastIndex+1)
 }
 
 
