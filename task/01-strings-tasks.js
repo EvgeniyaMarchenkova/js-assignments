@@ -243,15 +243,19 @@ function getRectangleString(width, height) {
  */
 function encodeToRot13(str) {
     var result = str;
+    var resultStr = '';
     var input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     var output ='NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
     for (var i = 0; i < str.length; i++ ) {
         var index = input.indexOf(result[i]);
         if (index != -1) {
-            result = result.replace(result.charAt(i), output.charAt(index))
+            resultStr +=  output.charAt(index)
+        }
+        else {
+            resultStr += result[i]
         }
     }
-    return result;
+    return resultStr;
 }
 
 /**
