@@ -409,8 +409,12 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-   var arrForCompare = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-
+    var arrForCompare = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+    return  arr.sort(function(a,b) {
+        var indexA = arrForCompare.indexOf(a);
+        var indexB = arrForCompare.indexOf(b);
+        return (indexB < indexA)?1:-1;
+    })
 }
 
 /** 
@@ -620,7 +624,16 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-   throw new Error('Not implemented');
+    var a = new Map();
+    return array.reduce(function(prevResult,item,i){
+        if (!prevResult.has(keySelector(item)))
+            prevResult.set(keySelector(item), [valueSelector(item)]);
+        else {
+            prevResult.get(keySelector(item)).push(valueSelector(item));
+        }
+        return prevResult;
+    }, a);
+    return a;
 }
 
 
@@ -658,7 +671,9 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    throw new Error('Not implemented');
+    return indexes.reduce(function(prevResult, item) {
+        return prevResult[item];
+    }, arr);
 }
 
 

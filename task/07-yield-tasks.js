@@ -38,15 +38,15 @@ function* get99BottlesOfBeer() {
         yield countOfButtle + ' bottles of beer on the wall, ' + countOfButtle + ' bottles of beer.';
         yield 'Take one down and pass it around, ' + (countOfButtle-1) + ' bottles of beer on the wall.';
         countOfButtle--;
-    } /*
-    else {
-        yield 'Take one down and pass it around, 1 bottle of beer on the wall.';
-        yield '1 bottle of beer on the wall, 1 bottle of beer.';
-        yield 'Take one down and pass it around, no more bottles of beer on the wall.';
-        yield  'No more bottles of beer on the wall, no more bottles of beer.';
-        yield 'Go to the store and buy some more, 99 bottles of beer on the wall.'
     }
-*/
+    else {
+        yield 'Take one down and pass it around, 1 bottle of beer on the wall.\n';
+        yield '1 bottle of beer on the wall, 1 bottle of beer.\n';
+          'Take one down and pass it around, no more bottles of beer on the wall.\n';
+          'No more bottles of beer on the wall, no more bottles of beer.\n';
+          'Go to the store and buy some more, 99 bottles of beer on the wall.\n'
+    }
+
 
 }
 

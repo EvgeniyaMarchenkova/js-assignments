@@ -21,8 +21,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-
-
+    return Date.parse(value);
 }
 
 /**
@@ -37,7 +36,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+    return Date.parse(value);
 }
 
 
@@ -126,7 +125,12 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+    date = new Date(date);
+    var hours = date.getUTCHours();
+    var minutes = date.getMinutes();
+    var alpha = 0.5*(60*hours - 11*minutes)%360;
+    if (alpha > 180) alpha = 360 - alpha;
+    return Math.abs(alpha)*Math.PI/180;
 }
 
 
