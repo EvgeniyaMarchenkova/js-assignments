@@ -73,7 +73,7 @@ describe('09-functions-n-closures-tasks', function() {
     });
 
 
-    it.optional('retry method should try to evaluate the specified function several times', () => {
+    it.optional('  method should try to evaluate the specified function several times', () => {
         var maxAttemps = 3;
         var attemps = 0;
         var expected = 'expected';

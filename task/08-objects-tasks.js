@@ -152,7 +152,16 @@ const cssSelectorBuilder = {
         this.result += selector1 + ' ' + combinator + ' ' + selector2;
         return this;
     },
+
+    stringify: function() {
+        var temp = this.result;
+        this.result = ''
+        return temp;
+    }
 };
+
+
+
 
 
 module.exports = {

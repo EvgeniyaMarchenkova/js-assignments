@@ -135,7 +135,15 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    rect1.y = rect1.top + rect1.height;
+    rect1.y1 = rect1.top;
+    rect2.y = rect2.top + rect2.height;
+    rect2.y1 = rect2.top;
+    rect1.x = rect1.left;
+    rect1.x1 = rect1.left + rect1.width;
+    rect2.x = rect2.left;
+    rect2.x1 = rect2.left + rect2.width;
+    return !( rect1.y < rect2.y1 || rect1.y1 > rect2.y || rect1.x1 < rect2.x || rect1.x > rect2.x1 );
 }
 
 
@@ -355,20 +363,39 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true 
  */
-function isBracketsBalanced(str) { /*
+function isBracketsBalanced(str) {
     var newStr = str;
     while (newStr.length > 1) {
-        if (/\[/.test(str)) {
-            newStr = str.replace(/\[/, '').replace(/\]/, '');
+        if (/\[/.test(newStr)) {
+            var indexOpen = newStr.indexOf('[');
+            console.log(indexOpen);
+            var indexClose = newStr.substring(indexOpen).lastIndexOf(']');
+            console.log(indexClose);
+            newStr = newStr.replace(newStr.charAt(indexOpen), '');
+            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen - 1), '');
+            console.log(newStr)
         }
         if (/\{/.test(str)) {
-            newStr = newStr.replace(/\{/, '').replace(/\}/, '');
+            var indexOpen = newStr.indexOf('{');
+            var indexClose = newStr.substring(indexOpen).lastIndexOf('}');
+            newStr = newStr.replace(newStr.charAt(indexOpen), '');
+            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen  - 1), '');
         }
         if (/\(/.test(str)) {
-            newStr = newStr.replace(/\(/, '').replace(/\)/, '');
+            var indexOpen = newStr.indexOf('(');
+            var indexClose = newStr.substring(indexOpen).lastIndexOf(')');
+            newStr = newStr.replace(newStr.charAt(indexOpen), '');
+            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen  - 1), '');
+        }
+        if (/\</.test(newStr)) {
+            var indexOpen = newStr.indexOf('<');
+            var indexClose = newStr.substring(indexOpen).lastIndexOf('>');
+            newStr = newStr.replace(newStr.charAt(indexOpen), '');
+            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen  - 1), '');
+
         }
     }
-    return newStr.length == 0; */
+    return newStr.length == 0;
 }
 
 

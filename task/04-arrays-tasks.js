@@ -183,15 +183,9 @@ function getStringsLength(arr) {
  *    [ 1, 'b', 'c'], 0, 'x'  => [ 'x', 1, 'b', 'c' ]
  */
 function insertItem(arr, item, index) {
-    arr.push('');
-    var resultArr = arr.map (function(element, i, arr) {
-        if (i > index) {
-            return arr[i-1];
-        }
-        else if (i == index) return item;
-        return element;
-    })
-    return resultArr;
+        arr.splice(index, 0, item);
+        return arr;
+
 }
 
 /**

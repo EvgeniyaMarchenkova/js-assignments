@@ -206,7 +206,6 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    function getRectangleString(width, height) {
         var leftCorner = '┌';
         var rigthCorner = '┐\n';
         var leftBottomCorner = '└';
@@ -219,10 +218,10 @@ function getRectangleString(width, height) {
             middleRow += ' ';
         }
         for (var j=0; j < height - 2; j++) {
-            middleSection += '|' + middleRow + '|\n'
+            middleSection += '│' + middleRow + '│\n'
         }
         return leftCorner + border + rigthCorner + middleSection + leftBottomCorner + border + rigthBottomCorner;
-    }
+
 }
 
 
