@@ -33,21 +33,18 @@
  *
  */
 function* get99BottlesOfBeer() {
-    var countOfButtle = 99;
-    if (countOfButtle > 1) {
+    let countOfButtle = 99;
+    while (countOfButtle > 2) {
         yield countOfButtle + ' bottles of beer on the wall, ' + countOfButtle + ' bottles of beer.';
         yield 'Take one down and pass it around, ' + (countOfButtle-1) + ' bottles of beer on the wall.';
         countOfButtle--;
     }
-    else {
-        yield 'Take one down and pass it around, 1 bottle of beer on the wall.\n';
-        yield '1 bottle of beer on the wall, 1 bottle of beer.\n';
-          'Take one down and pass it around, no more bottles of beer on the wall.\n';
-          'No more bottles of beer on the wall, no more bottles of beer.\n';
-          'Go to the store and buy some more, 99 bottles of beer on the wall.\n'
-    }
-
-
+    yield '2 bottles of beer on the wall, 2 bottles of beer.'
+    yield 'Take one down and pass it around, 1 bottle of beer on the wall.';
+    yield '1 bottle of beer on the wall, 1 bottle of beer.';
+    yield  'Take one down and pass it around, no more bottles of beer on the wall.';
+    yield  'No more bottles of beer on the wall, no more bottles of beer.';
+    yield  'Go to the store and buy some more, 99 bottles of beer on the wall.'
 }
 
 
@@ -61,13 +58,18 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    var i = 0;
-    while ( i >= 0) {
-        if (i == 0 || i == 1) {
-            yield 1;
-        }
+    const x = 1;
+    let prevItem = 0;
+    let currentItem = 1;
+    yield prevItem;
+    prevItem++;
+    yield prevItem;
+    while (true) {
+        yield currentItem;
+        let temp = currentItem;
+        currentItem += prevItem;
+        prevItem = temp;
     }
-
 }
 
 
@@ -146,7 +148,28 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    var minLength;
+    (source1.length > source2.length) ? minLength = source2.length : minLength = source1.length;
+    for (var j = 0; j < minLength; j++) {
+        if (source1[j] > source2[j]) {
+            yield source2[j];
+            yield source1[j];
+        }
+        else {
+            yield source1[j];
+            yield source2[j];
+        }
+    }
+    if (minLength == source2.length) {
+        for (var i = j; i < source1.length; i++) {
+            yield source1[i];
+        }
+    }
+    else {
+        for (i = j; i < source2.length; i++) {
+            yield source2[i];
+        }
+    }
 }
 
 

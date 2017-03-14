@@ -31,7 +31,7 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-    var regExp = /[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}/;
+    var regExp = /\{[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}/;
    return regExp;
 }
 
@@ -79,6 +79,8 @@ function getRegexForIPv4() {
 }
 
 
+
+
 /**
  * Returns the regexp that matches all SSN (Social Security Number) codes in
  * 'XXX-XX-XXXX' format where X is digit, where each group can't be all zeros
@@ -119,7 +121,7 @@ function getRegexForSSN() {
  *   'Pa55'.match(validator) => false
  */
 function getPasswordValidator(minLength) {
-   var regexp = new RegExp('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{' + minLength + ',}')
+    var regexp = new RegExp('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])^[a-zA-Z0-9]{' + minLength + ',}$');
     return regexp;
 }
 

@@ -403,16 +403,18 @@ function isBracketsBalanced(str) { /*
  *   Date('2000-01-01 01:00:00.100'), Date('2015-01-02 03:00:05.000')  => '15 years ago'
  *
  */
-function timespanToHumanString(startDate, endDate) {
-    var fulldays = (endDate - startDate)/86400000;
+function timespanToHumanString(startDate, endDate) { /*
+    var end = new endDate;
+    var start = new startDate;
+    var fulldays = (end - start)/86400000;
     if (fulldays >= 546) {
-        return  endDate.getFullYear() - startDate.getFullYear() + ' years ago';
+        return  end.getFullYear() - start.getFullYear() + ' years ago';
     }
     if (fulldays >= 345 && fulldays < 546) {
         return  'a years ago';
     }
     if (fulldays >= 45 && fulldays < 345) {
-        return  endDate.getFullMonth() - startDate.getFullMonth() + ' months ago';
+        return  end.getFullMonth() - start.getFullMonth() + ' months ago';
     }
     if (fulldays >= 25 && fulldays < 45) {
         return  'a month ago';
@@ -420,14 +422,14 @@ function timespanToHumanString(startDate, endDate) {
     if (fulldays >= 1.5 && fulldays < 25) {
         return  Math.ceil(fulldays) + ' days ago'
     }
-    var fullhours = (endDate - startDate)/3600000
+    var fullhours = (end - start)/3600000
     if (fullhours >= 22 && fullhours < 36) {
         return  'a day ago';
     }
     if (fullhours >= 1.5 && fullhours < 22) {
         return  Math.ceil(fullhours) + ' hours ago'
     }
-    var fullminutes = (endDate - startDate)/60000;
+    var fullminutes = (end - start)/60000; */
 }
 
 

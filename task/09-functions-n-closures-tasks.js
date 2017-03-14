@@ -94,13 +94,11 @@ function getPolynom(...args) {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-    var tempObj = {};
     return function() {
-        if (func in tempObj) {
-            return tempObj[func];
+        if (!func.memory) {
+            func.memory = func.call();
         }
-        tempObj[func] = func();
-        return func();
+        return func.memory;
     }
 }
 
@@ -121,9 +119,12 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-    attempt++;
-    return function() {
-
+    var countOsCall = 0;
+    if (countOsCall <= attempts) {
+        return func();
+    }
+    else {
+        return countOsCall;
     }
 }
 
@@ -194,8 +195,10 @@ function partialUsingArguments(fn, ...rest) {
  *   getId10() => 11
  */
 function getIdGeneratorFunction(startFrom) {
+    var count = startFrom;
     return function() {
-        return startFrom;
+        count++;
+        return count-1;
     }
 }
 

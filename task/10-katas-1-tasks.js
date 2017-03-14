@@ -18,7 +18,25 @@
  */
 function createCompassPoints() {
     throw new Error('Not implemented');
-    var sides = ['N','E','S','W'];  // use array of cardinal directions only!
+    var sides = ['N','E','S','W'];
+    var arr = new Array(32);
+    var index = 0;
+    arr.fill(0);
+    return arr.reduce (function(prevResult,item,i) {
+        var obj = {abbreviation:'', azimuth: ''};
+        if (i == 0 || i % 8 == 0) {
+            obj.abbreviation = sides[index];
+            index++;
+        }
+        else if (i % 4 == 0) {
+            obj.abbreviation = sides[index-1] + sides[index];
+        }
+        else if (i % 2 == 0) {
+            obj.abbreviation = sides[index] + sides[index-1] + sides[index-1] ;
+        }
+        prevResult.push(obj);
+        return prevResult;
+    },[])
 }
 
 
@@ -137,7 +155,39 @@ function canDominoesMakeRow(dominoes) {
  * [ 1, 2, 4, 5]          => '1,2,4,5'
  */
 function extractRanges(nums) {
-    throw new Error('Not implemented');
+    var resultStr = '';
+    var flag = false;
+    nums.reduce(function(prevResult,item,i){
+        if (i == 0) resultStr += item;
+        else if(item == prevResult + 1) {
+            if (resultStr.charAt(resultStr.length-1) != '-') {
+                if (flag == true) {
+                    resultStr += '-';
+                    flag = false;
+                }
+                else {
+                    flag = true;
+                }
+            }
+            if (i == nums.length - 1) {
+                if (resultStr.charAt(resultStr.length-1) != '-') {
+                    resultStr += ',' + item;
+                }
+                else  resultStr += item;
+
+            }
+        }
+        else {
+            if (resultStr.charAt(resultStr.length-1) != prevResult) {
+                resultStr +=   prevResult+ ',' + item;
+            }
+            else {
+                resultStr += ',' + item;
+            }
+        }
+        return item;
+    }, '')
+    return resultStr;
 }
 
 module.exports = {

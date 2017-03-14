@@ -25,9 +25,10 @@
 function Rectangle(width, height) {
     this.width = width;
     this.height = height;
-    this.getArea = function() {
-        return this.width*this.height;
-    }
+}
+
+Rectangle.prototype.getArea = function() {
+    return this.width*this.height;
 }
 
 
@@ -58,7 +59,11 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-    var args = Object.values(JSON.parse(json));
+    var args = [];
+    var parsedJSON = JSON.parse(json) ;
+    for (var key in parsedJSON) {
+        args.push(parsedJSON[key]);
+    }
     return new proto.constructor(...args);
 }
 
