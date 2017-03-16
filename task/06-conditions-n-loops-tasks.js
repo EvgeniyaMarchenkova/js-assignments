@@ -364,38 +364,27 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    var newStr = str;
-    while (newStr.length > 1) {
-        if (/\[/.test(newStr)) {
-            var indexOpen = newStr.indexOf('[');
-            console.log(indexOpen);
-            var indexClose = newStr.substring(indexOpen).lastIndexOf(']');
-            console.log(indexClose);
-            newStr = newStr.replace(newStr.charAt(indexOpen), '');
-            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen - 1), '');
-            console.log(newStr)
-        }
-        if (/\{/.test(str)) {
-            var indexOpen = newStr.indexOf('{');
-            var indexClose = newStr.substring(indexOpen).lastIndexOf('}');
-            newStr = newStr.replace(newStr.charAt(indexOpen), '');
-            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen  - 1), '');
-        }
-        if (/\(/.test(str)) {
-            var indexOpen = newStr.indexOf('(');
-            var indexClose = newStr.substring(indexOpen).lastIndexOf(')');
-            newStr = newStr.replace(newStr.charAt(indexOpen), '');
-            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen  - 1), '');
-        }
-        if (/\</.test(newStr)) {
-            var indexOpen = newStr.indexOf('<');
-            var indexClose = newStr.substring(indexOpen).lastIndexOf('>');
-            newStr = newStr.replace(newStr.charAt(indexOpen), '');
-            newStr = newStr.replace(newStr.charAt(indexClose + indexOpen  - 1), '');
-
+    var openBrackets = '{[(<';
+    var closeBrackets = '}])>';
+    var stack = [];
+    function isOpenBracket(openBracket) {
+        return openBrackets.indexOf(openBracket) >= 0;
+    }
+    function getOpenBracketByClose(closeBracket) {
+        var index = closeBrackets.indexOf(closeBracket);
+        if (index < 0) return null;
+        return openBrackets[index];
+    }
+    for (var i = 0; i < str.length; i++) {
+        var c = str.charAt(i);
+        if (isOpenBracket(c)) {
+            stack.push(c);
+        } else if (stack.length == 0 || getOpenBracketByClose(c) != stack.pop()) {
+            return false;
         }
     }
-    return newStr.length == 0;
+
+    return stack.length == 0;
 }
 
 
@@ -430,33 +419,36 @@ function isBracketsBalanced(str) {
  *   Date('2000-01-01 01:00:00.100'), Date('2015-01-02 03:00:05.000')  => '15 years ago'
  *
  */
-function timespanToHumanString(startDate, endDate) { /*
-    var end = new endDate;
-    var start = new startDate;
-    var fulldays = (end - start)/86400000;
-    if (fulldays >= 546) {
-        return  end.getFullYear() - start.getFullYear() + ' years ago';
+function timespanToHumanString(startDate, endDate) {
+    var sub = Math.abs( (new Date(startDate)).getTime() - (new Date(endDate)).getTime() );
+    if (sub <= 45000) {
+        return 'a few seconds ago';
+    } else if (sub <= 90000) {
+        return 'a minute ago';
+    } else if (sub <= 45*60*1000) {
+        if (Math.ceil(sub/60000)>2) {
+            return Math.floor(sub/60000) + ' minutes ago';
+        }
+        else {
+            return Math.ceil(sub/60000) + ' minutes ago';
+        }
+    } else if (sub <= 90*60*1000) {
+        return 'an hour ago';
+    } else if (sub <= 22*60*60*1000) {
+        return Math.ceil(sub/3600000) + ' hours ago';
+    } else if (sub <= 36*60*60*1000) {
+        return 'a day ago';
+    } else if (sub <= 25*60*60*24*1000) {
+        return Math.ceil(sub/86400000) + ' days ago';
+    } else if (sub <= 45*60*60*24*1000) {
+        return 'a month ago';
+    } else if (sub <= 345*60*60*24*1000) {
+        return Math.ceil(sub/2592000000) + ' months ago';
+    } else if (sub <= 545*60*60*24*1000) {
+        return 'a year ago';
+    } else {
+        return Math.ceil(sub/31104000000) + ' years ago';
     }
-    if (fulldays >= 345 && fulldays < 546) {
-        return  'a years ago';
-    }
-    if (fulldays >= 45 && fulldays < 345) {
-        return  end.getFullMonth() - start.getFullMonth() + ' months ago';
-    }
-    if (fulldays >= 25 && fulldays < 45) {
-        return  'a month ago';
-    }
-    if (fulldays >= 1.5 && fulldays < 25) {
-        return  Math.ceil(fulldays) + ' days ago'
-    }
-    var fullhours = (end - start)/3600000
-    if (fullhours >= 22 && fullhours < 36) {
-        return  'a day ago';
-    }
-    if (fullhours >= 1.5 && fullhours < 22) {
-        return  Math.ceil(fullhours) + ' hours ago'
-    }
-    var fullminutes = (end - start)/60000; */
 }
 
 
